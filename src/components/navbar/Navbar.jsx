@@ -60,30 +60,30 @@ const Navbar = () => {
 
 
   useEffect(() => {
-    // const isDarkMode = localStorage.getItem('darkMode') === 'true';
-    // setTheme(isDarkMode);
-    // if (theme == false) {
-    //   document.documentElement.classList.remove('dark');
-    // } else {
-    //   document.documentElement.classList.add('dark');
-    // }
-  }, []);
-
-  useEffect(() => {
-
-    if (theme == false) {
+    const isDarkMode = localStorage.getItem('darkMode') === 'true';
+    if (isDarkMode != null && isDarkMode == false) {
       document.documentElement.classList.remove('dark');
     } else {
       document.documentElement.classList.add('dark');
     }
+  }, []);
 
-    // save in local storage
-    localStorage.setItem("darkMode", theme);
+  // useEffect(() => {
 
-  }, [theme]);
+  //   if (theme == false) {
+  //     document.documentElement.classList.remove('dark');
+  //   } else {
+  //     document.documentElement.classList.add('dark');
+  //   }
+
+  //   // save in local storage
+  //   localStorage.setItem("darkMode", theme);
+
+  // }, [theme]);
 
   const toggleDarkMode = () => {
     setTheme((theme) => !theme);
+    localStorage.setItem("darkMode", theme);
   };
 
   return (
