@@ -14,7 +14,7 @@ function App() {
         </div>
       </section>
 
-      <section id='features'>
+      <section id='features' className='py-10 dark:bg-gray-800 dark:text-white'>
         <div className='container mx-auto max-w-[1340px]'>
           <FeatureCard />
         </div>

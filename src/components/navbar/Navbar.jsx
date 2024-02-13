@@ -1,6 +1,13 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import { BsSunFill } from "react-icons/bs";
+import { FaMoon } from "react-icons/fa";
+import { Button, Drawer } from 'antd';
+import { RxHamburgerMenu } from "react-icons/rx";
 
 const Navbar = () => {
+  const [theme, setTheme] = useState(false);
+  const [open, setOpen] = useState(false);
+
   const NavItems = [
     {
       id: 1,
@@ -43,13 +50,52 @@ const Navbar = () => {
       section: "#clients"
     },
   ]
+
+  const showDrawer = () => {
+    setOpen(true);
+  };
+  const onClose = () => {
+    setOpen(false);
+  };
+
+
+  useEffect(() => {
+    // const isDarkMode = localStorage.getItem('darkMode') === 'true';
+    // setTheme(isDarkMode);
+    // if (theme == false) {
+    //   document.documentElement.classList.remove('dark');
+    // } else {
+    //   document.documentElement.classList.add('dark');
+    // }
+  }, []);
+
+  useEffect(() => {
+
+    if (theme == false) {
+      document.documentElement.classList.remove('dark');
+    } else {
+      document.documentElement.classList.add('dark');
+    }
+
+    // save in local storage
+    localStorage.setItem("darkMode", theme);
+
+  }, [theme]);
+
+  const toggleDarkMode = () => {
+    setTheme((theme) => !theme);
+  };
+
   return (
     <>
+      <Button type="primary" onClick={showDrawer} className='text-2xl mt-2 md:hidden'>
+        <RxHamburgerMenu />
+      </Button>
       <div className='flex justify-between'>
         <div className='text-white'>
           logo
         </div>
-        <div className=''>
+        <div className='hidden md:block'>
           {
             NavItems.map((item) => {
               return <a href={item.section} className='text-white p-3 px-5 hover:text-red-600 font-bold text-lg  inline-block'> {item.title} </a>
@@ -58,8 +104,22 @@ const Navbar = () => {
         </div>
 
       </div>
+      <button
+        onClick={toggleDarkMode}
+        className="px-4 py-2 rounded-md bg-gray-800 text-white"
+      >
+        {(theme == false) ? <FaMoon /> : <BsSunFill />}
+      </button>
 
-
+      <Drawer title="Navbar" onClose={onClose} open={open} placement='left' >
+        <div className=''>
+          {
+            NavItems.map((item) => {
+              return <a href={item.section} className='text-black dark:text-white p-3 px-5 hover:text-red-600 font-bold text-lg block'> {item.title} </a>
+            })
+          }
+        </div>
+      </Drawer>
     </>
   )
 }
