@@ -3,6 +3,8 @@ import { BsSunFill } from "react-icons/bs";
 import { FaMoon } from "react-icons/fa";
 import { Button, Drawer } from 'antd';
 import { RxHamburgerMenu } from "react-icons/rx";
+import { SiSitepoint } from "react-icons/si";
+
 
 const Navbar = () => {
   const [isDarkTheme, setIsDarkTheme] = useState(null);
@@ -87,7 +89,7 @@ const Navbar = () => {
       </Button>
       <div className='flex justify-between'>
         <div className='text-white'>
-          logo
+          <SiSitepoint /> Asif Mirza
         </div>
         <div className='hidden md:block'>
           {
