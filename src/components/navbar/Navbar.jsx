@@ -5,7 +5,7 @@ import { Button, Drawer } from 'antd';
 import { RxHamburgerMenu } from "react-icons/rx";
 
 const Navbar = () => {
-  const [theme, setTheme] = useState(false);
+  const [isDarkTheme, setIsDarkTheme] = useState(null);
   const [open, setOpen] = useState(false);
 
   const NavItems = [
@@ -58,32 +58,26 @@ const Navbar = () => {
     setOpen(false);
   };
 
-
   useEffect(() => {
-    const isDarkMode = localStorage.getItem('darkMode') === 'true';
-    if (isDarkMode != null && isDarkMode == false) {
-      document.documentElement.classList.remove('dark');
-    } else {
+    let isDark = localStorage.getItem("isDark");
+    if (isDark == 'true') {
       document.documentElement.classList.add('dark');
+      setIsDarkTheme("true");
     }
-  }, []);
+  }, [])
 
-  // useEffect(() => {
-
-  //   if (theme == false) {
-  //     document.documentElement.classList.remove('dark');
-  //   } else {
-  //     document.documentElement.classList.add('dark');
-  //   }
-
-  //   // save in local storage
-  //   localStorage.setItem("darkMode", theme);
-
-  // }, [theme]);
 
   const toggleDarkMode = () => {
-    setTheme((theme) => !theme);
-    localStorage.setItem("darkMode", theme);
+    let isDark = localStorage.getItem("isDark");
+    if (isDark == null || isDark == 'false') {
+      localStorage.setItem('isDark', true);
+      document.documentElement.classList.add('dark');
+      setIsDarkTheme("true");
+    } else {
+      localStorage.setItem('isDark', false);
+      document.documentElement.classList.remove('dark');
+      setIsDarkTheme(null);
+    }
   };
 
   return (
@@ -108,7 +102,7 @@ const Navbar = () => {
         onClick={toggleDarkMode}
         className="px-4 py-2 rounded-md bg-gray-800 text-white"
       >
-        {(theme == false) ? <FaMoon /> : <BsSunFill />}
+        {(isDarkTheme == "false" || isDarkTheme == null) ? <FaMoon /> : <BsSunFill />}
       </button>
 
       <Drawer title="Navbar" onClose={onClose} open={open} placement='left' >
